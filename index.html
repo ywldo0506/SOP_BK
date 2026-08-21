@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>해충 클레임 초동 대응 매뉴얼</title> 
+<title>해충 클레임 초동 대응 매뉴얼</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 
@@ -293,8 +293,15 @@
   }
 
   @media print{
-    body{background:#fff;}
+    body{background:#fff; padding-bottom:0;}
+    .footer-note{margin-top:24px; padding-bottom:24px;}
     .hero::after, .hero::before{display:none;}
+    .stage{ break-inside: avoid; page-break-inside: avoid; }
+    .stage-card{ break-inside: avoid; page-break-inside: avoid; }
+    .poster{ break-inside: avoid; page-break-inside: avoid; }
+    .rule-grid{ break-inside: avoid; page-break-inside: avoid; }
+    .script{ break-inside: avoid; page-break-inside: avoid; }
+    .section-label{ break-after: avoid; page-break-after: avoid; }
   }
 </style>
 </head>
@@ -368,17 +375,12 @@
             <div class="stage-title">시각적 격리</div>
             <div class="stage-principle"><b>핵심 원칙</b> · 해충을 타인의 시선으로부터 최대한 빠르게 은폐하고 타 고객에게 노출을 막는다.</div>
           </div>
-          <div class="rule-grid">
+          <div class="rule-grid" style="grid-template-columns:1fr;">
             <div class="rule-box yes">
-              <div class="rb-head"><span class="rb-icon">✓</span>DO — 테이블</div>
+              <div class="rb-head"><span class="rb-icon">✓</span>DO</div>
               <ul>
-                <li>준비된 '클레임용 덮개 린넨(냅킨)'으로 해당 접시·식기를 즉시 덮어 노출 차단</li>
-              </ul>
-            </div>
-            <div class="rule-box yes">
-              <div class="rb-head"><span class="rb-icon">✓</span>DO — 샐러드바</div>
-              <ul>
-                <li>해당 집기와 음식을 통째로 주방으로 이동 (다른 고객 취식 차단)</li>
+                <li><b>테이블</b> — 준비된 '클레임용 덮개 린넨(냅킨)'으로 해당 접시·식기를 즉시 덮어 노출 차단</li>
+                <li><b>샐러드바</b> — 해당 집기와 음식을 통째로 주방으로 이동 (다른 고객 취식 차단)</li>
               </ul>
             </div>
           </div>
@@ -460,21 +462,21 @@
     <div class="poster">
       <div class="poster-head">
         <div class="pt">현장 교육용 요약</div>
-        <h2>3NO · 3YES</h2>
+        <h2>3 DON'T · 3 DO</h2>
         <p class="ps">이 6가지만 지키면 1차 대응은 성공입니다</p>
       </div>
       <div class="poster-grid">
         <div class="poster-col no">
-          <div class="pc-title"><span class="pc-badge">✕</span>NO 3 — 클레임을 키우는 행동</div>
-          <div class="pc-item"><span class="kw">NO Look</span><span class="desc">해충을 뚫어지게 들여다보며 유심히 살피지 않는다</span></div>
-          <div class="pc-item"><span class="kw">NO Excuse</span><span class="desc">"그럴 리 없는데", "저는 메이트라 잘 몰라요" 변명하지 않는다</span></div>
-          <div class="pc-item"><span class="kw">NO Promise</span><span class="desc">"환불해 드릴게요", "다시 해드릴게요" 임의로 약속하지 않는다</span></div>
+          <div class="pc-title"><span class="pc-badge">✕</span>DON'T 3 — 클레임을 키우는 행동</div>
+          <div class="pc-item"><span class="kw">DON'T Look</span><span class="desc">해충을 뚫어지게 들여다보며 유심히 살피지 않는다</span></div>
+          <div class="pc-item"><span class="kw">DON'T Excuse</span><span class="desc">"그럴 리 없는데", "저는 메이트라 잘 몰라요" 변명하지 않는다</span></div>
+          <div class="pc-item"><span class="kw">DON'T Promise</span><span class="desc">"환불해 드릴게요", "다시 해드릴게요" 임의로 약속하지 않는다</span></div>
         </div>
         <div class="poster-col yes">
-          <div class="pc-title"><span class="pc-badge">✓</span>YES 3 — 1차 대응 성공 공식</div>
-          <div class="pc-item"><span class="kw">YES Bow</span><span class="desc">즉시 고개를 숙이고 정중하게 사과한다</span></div>
-          <div class="pc-item"><span class="kw">YES Cover</span><span class="desc">냅킨/린넨으로 즉시 덮어 시각적 노출을 차단한다</span></div>
-          <div class="pc-item"><span class="kw">YES Call</span><span class="desc">30초 이내에 무전으로 점장/캡틴을 호출한다</span></div>
+          <div class="pc-title"><span class="pc-badge">✓</span>DO 3 — 1차 대응 성공 공식</div>
+          <div class="pc-item"><span class="kw">DO Bow</span><span class="desc">즉시 고개를 숙이고 정중하게 사과한다</span></div>
+          <div class="pc-item"><span class="kw">DO Cover</span><span class="desc">냅킨/린넨으로 즉시 덮어 시각적 노출을 차단한다</span></div>
+          <div class="pc-item"><span class="kw">DO Call</span><span class="desc">30초 이내에 무전으로 관리자를 호출한다</span></div>
         </div>
       </div>
     </div>
