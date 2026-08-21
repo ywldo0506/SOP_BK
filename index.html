@@ -102,7 +102,7 @@
 
   .section-label{
     display:flex; align-items:center; gap:10px;
-    margin:48px 0 20px;
+    margin:36px 0 18px;
   }
   .section-label .line{flex:1; height:1px; background:var(--line);}
   .section-label span{
@@ -242,11 +242,11 @@
     background:var(--navy);
     background-image:linear-gradient(155deg, var(--navy) 0%, var(--navy-deep) 100%);
     border-radius:20px;
-    padding:34px 28px;
+    padding:26px 26px 24px;
     color:#fff;
     margin-top:6px;
   }
-  .poster-head{text-align:center; margin-bottom:26px;}
+  .poster-head{text-align:center; margin-bottom:18px;}
   .poster-head .pt{font-size:12px; font-weight:800; letter-spacing:0.14em; color:var(--gold); margin-bottom:8px; text-transform:uppercase;}
   .poster-head h2{font-size:24px; font-weight:900;}
   .poster-head .ps{font-size:13px; color:rgba(255,255,255,0.65); margin-top:6px;}
@@ -286,6 +286,19 @@
   .poster-col.yes .kw{color:#8CE7BE;}
   .pc-item .desc{font-size:12.5px; color:rgba(255,255,255,0.72); line-height:1.55;}
 
+  .do-list{display:flex; flex-direction:column; gap:12px;}
+  .do-item{
+    display:grid; grid-template-columns:40px 1fr; gap:16px;
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14);
+    border-radius:14px; padding:15px 18px;
+  }
+  .do-num{
+    width:34px; height:34px; border-radius:10px; background:#8CE7BE; color:var(--navy-deep);
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; flex-shrink:0;
+  }
+  .do-title{font-size:14.5px; font-weight:900; color:#fff; margin-bottom:6px; line-height:1.4;}
+  .do-desc{font-size:12.5px; color:rgba(255,255,255,0.75); line-height:1.6;}
+
   /* ===== FOOTER ===== */
   .footer-note{
     text-align:center; margin-top:44px;
@@ -311,7 +324,7 @@
     <div class="hero-inner">
       <div class="eyebrow"><span class="dot"></span>CX 현장 매뉴얼 · 메이트 필독</div>
       <h1>해충 클레임, 30초 안에 승부가 갈립니다</h1>
-      <p class="hero-sub">당황한 순간의 표정과 말 한마디가 클레임을 키웁니다. 아래 4단계와 시간 안에 정확히 움직여봅시다.</p>
+      <p class="hero-sub">"말없이 치우지 말고 진심으로 사과하며, 30초 안에 관리자에게 보고해라!"</p>
     </div>
   </div>
 
@@ -338,7 +351,7 @@
               <ul>
                 <li>해충을 얼굴 가까이 대고 유심히 살피는 행위</li>
                 <li>"세스코 관리 매장이라 그럴 리 없는데요?" 식 반박·변명</li>
-                <li>"제가 메이트라 잘 모르겠어요" 책임 회피</li>
+                <li>당연하다는 듯 성의 없이 응대</li>
                 <li>손가락으로 가리키거나 큰 소리로 "벌레요?" 되묻기</li>
               </ul>
             </div>
@@ -456,21 +469,30 @@
     <div class="poster">
       <div class="poster-head">
         <div class="pt">현장 교육용 요약</div>
-        <h2>3 DON'T · 3 DO</h2>
-        <p class="ps">이 6가지만 지키면 1차 대응은 성공입니다</p>
+        <h2>DO 3</h2>
+        <p class="ps">이 3가지만 지키면 1차 대응은 성공입니다</p>
       </div>
-      <div class="poster-grid">
-        <div class="poster-col no">
-          <div class="pc-title"><span class="pc-badge">✕</span>DON'T 3 — 클레임을 키우는 행동</div>
-          <div class="pc-item"><span class="kw">DON'T Look</span><span class="desc">해충을 뚫어지게 들여다보며 유심히 살피지 않는다</span></div>
-          <div class="pc-item"><span class="kw">DON'T Excuse</span><span class="desc">"그럴 리 없는데", "저는 메이트라 잘 몰라요" 변명하지 않는다</span></div>
-          <div class="pc-item"><span class="kw">DON'T Promise</span><span class="desc">"환불해 드릴게요", "다시 해드릴게요" 임의로 약속하지 않는다</span></div>
+      <div class="do-list">
+        <div class="do-item">
+          <div class="do-num">1</div>
+          <div class="do-body">
+            <div class="do-title">[진정성 있는 사과] 즉시 정중하게 고개 숙여 사과하기</div>
+            <div class="do-desc">말뿐만 아니라 진심으로 미안해하는 표정과 정중하게 상체를 숙이는 자세(15도 인사)를 동시에 취해야 합니다.</div>
+          </div>
         </div>
-        <div class="poster-col yes">
-          <div class="pc-title"><span class="pc-badge">✓</span>DO 3 — 1차 대응 성공 공식</div>
-          <div class="pc-item"><span class="kw">DO Bow</span><span class="desc">즉시 고개를 숙이고 정중하게 사과한다</span></div>
-          <div class="pc-item"><span class="kw">DO Cover</span><span class="desc">냅킨/린넨으로 즉시 덮어 시각적 노출을 차단한다</span></div>
-          <div class="pc-item"><span class="kw">DO Call</span><span class="desc">30초 이내에 무전으로 관리자를 호출한다</span></div>
+        <div class="do-item">
+          <div class="do-num">2</div>
+          <div class="do-body">
+            <div class="do-title">[죄송한 표정과 공감] 미안함이 드러나는 표정 및 정중한 은폐 수거</div>
+            <div class="do-desc">고객의 불쾌감에 100% 공감하는 안타깝고 죄송한 표정을 지으며, 덮개/린넨으로 해당 접시를 덮어 주변의 시선을 차단한 후 정중하게 수거합니다.</div>
+          </div>
+        </div>
+        <div class="do-item">
+          <div class="do-num">3</div>
+          <div class="do-body">
+            <div class="do-title">[신속한 보고] 30초 이내 관리자에게 바통 터치하기</div>
+            <div class="do-desc">수거 후 즉시 매장 내 책임자에게 [테이블 번호 + 해충 종류 + 고객 감정 상태]를 무전/구두로 신속하게 보고합니다.</div>
+          </div>
         </div>
       </div>
     </div>
