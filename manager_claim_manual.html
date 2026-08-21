@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>해충 클레임 관리자 대응 매뉴얼</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  :root{
+    --navy: #1E2761;
+    --navy-deep: #12173F;
+    --navy-soft: #4A5296;
+    --paper: #FFFFFF;
+    --paper-tint: #F6F7FB;
+    --line: #E3E5F0;
+    --danger: #C43D3D;
+    --danger-tint: #FBECEC;
+    --go: #1F7A5C;
+    --go-tint: #E9F6F0;
+    --ink: #1B1D2A;
+    --ink-soft: #5B5F76;
+    --gold: #C79A3F;
+    --warn: #B4590E;
+    --warn-tint: #FFF1E4;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans KR','맑은 고딕','Malgun Gothic',sans-serif;
+    background:var(--paper-tint);
+    color:var(--ink);
+    line-height:1.6;
+    padding-bottom:60px;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    background:var(--navy);
+    background-image:linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color:#fff;
+    padding:52px 24px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:""; position:absolute; right:-60px; top:-60px;
+    width:260px; height:260px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .hero::before{
+    content:""; position:absolute; right:20px; bottom:-90px;
+    width:200px; height:200px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.06);
+  }
+  .hero-inner{max-width:900px; margin:0 auto; position:relative; z-index:1;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12.5px; font-weight:700; letter-spacing:0.14em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:16px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--gold);}
+  h1{font-size:clamp(26px, 4.2vw, 38px); font-weight:900; letter-spacing:-0.01em; margin-bottom:10px;}
+  .hero-sub{font-size:15px; color:rgba(255,255,255,0.72); max-width:600px; margin-bottom:28px;}
+
+  .stopwatch{
+    display:flex; align-items:center; gap:0;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:14px; padding:16px 20px;
+    max-width:700px; flex-wrap:wrap;
+  }
+  .stopwatch .seg{display:flex; flex-direction:column; gap:2px; padding:0 16px; border-right:1px solid rgba(255,255,255,0.14);}
+  .stopwatch .seg:last-child{border-right:none;}
+  .stopwatch .seg .t{font-size:19px; font-weight:900; color:#fff; font-variant-numeric:tabular-nums;}
+  .stopwatch .seg .l{font-size:11px; color:rgba(255,255,255,0.6); font-weight:500;}
+
+  /* ===== CONTAINER ===== */
+  .wrap{max-width:900px; margin:0 auto; padding:0 24px;}
+
+  .section-label{display:flex; align-items:center; gap:10px; margin:48px 0 20px;}
+  .section-label .line{flex:1; height:1px; background:var(--line);}
+  .section-label span{font-size:12px; font-weight:700; letter-spacing:0.12em; color:var(--navy-soft); text-transform:uppercase; white-space:nowrap;}
+
+  /* ===== TIMELINE ===== */
+  .stage{display:grid; grid-template-columns:96px 1fr; gap:0 20px; position:relative; margin-bottom:6px;}
+  .stage-rail{position:relative; display:flex; flex-direction:column; align-items:center;}
+  .stage-rail .badge{
+    width:64px; height:64px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-weight:900; box-shadow:0 4px 14px rgba(30,39,97,0.25); flex-shrink:0; z-index:2;
+  }
+  .stage-rail .badge .n{font-size:11px; font-weight:700; opacity:0.75; letter-spacing:0.04em;}
+  .stage-rail .badge .r{font-size:12.5px; font-weight:900; font-variant-numeric:tabular-nums;}
+  .stage-rail .rail-line{width:2px; flex:1; background:repeating-linear-gradient(to bottom, var(--line) 0 6px, transparent 6px 12px); margin-top:6px;}
+  .stage:last-child .rail-line{display:none;}
+
+  .stage-card{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:26px 26px 22px; margin-bottom:40px;}
+  .stage-head{margin-bottom:14px;}
+  .stage-title{font-size:19px; font-weight:900; color:var(--navy-deep); margin-bottom:6px;}
+  .stage-goal{font-size:13.5px; color:var(--ink-soft); background:var(--paper-tint); border-left:3px solid var(--navy-soft); padding:9px 14px; border-radius:0 8px 8px 0;}
+  .stage-goal b{color:var(--navy);}
+
+  .rule-grid{display:grid; grid-template-columns:1fr; gap:12px; margin-top:16px;}
+  @media(min-width:620px){ .rule-grid{grid-template-columns:1fr 1fr;} }
+  .rule-box{border-radius:12px; padding:16px 18px;}
+  .rule-box.no{background:var(--danger-tint); border:1px solid #F1CFCF;}
+  .rule-box.yes{background:var(--go-tint); border:1px solid #C8E7DA;}
+  .rule-box .rb-head{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:800; letter-spacing:0.03em; margin-bottom:9px;}
+  .rule-box.no .rb-head{color:var(--danger);}
+  .rule-box.yes .rb-head{color:var(--go);}
+  .rule-box .rb-icon{width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#fff; flex-shrink:0;}
+  .rule-box.no .rb-icon{background:var(--danger);}
+  .rule-box.yes .rb-icon{background:var(--go);}
+  .rule-box ul{list-style:none;}
+  .rule-box li{font-size:13.5px; color:var(--ink); padding:5px 0 5px 16px; position:relative;}
+  .rule-box li::before{content:"·"; position:absolute; left:2px; top:5px; font-weight:900;}
+  .rule-box.no li::before{color:var(--danger);}
+  .rule-box.yes li::before{color:var(--go);}
+
+  .script{margin-top:16px; background:var(--navy-deep); border-radius:12px; padding:18px 20px; position:relative;}
+  .script::before{
+    content:"대사"; position:absolute; top:-9px; left:16px; background:var(--gold); color:var(--navy-deep);
+    font-size:10.5px; font-weight:800; padding:2px 10px; border-radius:20px; letter-spacing:0.04em;
+  }
+  .script p{color:#fff; font-size:14.5px; font-weight:500; line-height:1.75;}
+  .script .speaker{display:block; color:var(--gold); font-size:11.5px; font-weight:700; letter-spacing:0.06em; margin-bottom:8px;}
+
+  .handoff-note{
+    display:flex; gap:12px; align-items:flex-start;
+    background:#FFF8E9; border:1px solid #F0DFB0; border-radius:12px; padding:14px 16px;
+    margin-top:14px; font-size:13.5px; color:#7A5B12;
+  }
+  .handoff-note b{color:#5C4409;}
+
+  /* ===== DATA TABLE (STAGE 3) ===== */
+  .data-table{width:100%; border-collapse:separate; border-spacing:0; margin-top:16px; font-size:13px;}
+  .data-table thead th{
+    background:var(--navy); color:#fff; text-align:left; font-weight:800;
+    padding:11px 14px; font-size:12px; letter-spacing:0.02em;
+  }
+  .data-table thead th:first-child{border-radius:10px 0 0 0;}
+  .data-table thead th:last-child{border-radius:0 10px 0 0;}
+  .data-table tbody td{
+    padding:12px 14px; border-bottom:1px solid var(--line); border-left:1px solid var(--line);
+    color:var(--ink); vertical-align:top; line-height:1.55;
+  }
+  .data-table tbody td:first-child{border-left:none; font-weight:800; color:var(--navy-deep); background:var(--paper-tint); white-space:nowrap;}
+  .data-table tbody tr:last-child td{border-bottom:1px solid var(--line);}
+
+  /* ===== CHECKLIST (STAGE 4) ===== */
+  .checklist{margin-top:16px; display:flex; flex-direction:column; gap:12px;}
+  .check-item{
+    display:grid; grid-template-columns:40px 1fr; gap:14px;
+    background:var(--paper-tint); border:1px solid var(--line); border-radius:12px; padding:15px 16px;
+  }
+  .check-item .ci-num{
+    width:32px; height:32px; border-radius:9px; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px;
+  }
+  .ci-title-row{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px;}
+  .ci-title{font-size:14.5px; font-weight:800; color:var(--navy-deep);}
+  .ci-time{font-size:11.5px; font-weight:700; color:var(--gold); background:rgba(199,154,63,0.12); padding:2px 9px; border-radius:20px;}
+  .ci-desc{font-size:13px; color:var(--ink-soft); line-height:1.6;}
+  .ci-desc b{color:var(--ink);}
+
+  /* stage accent colors */
+  .stage:nth-child(1) .badge{background:var(--navy);}
+  .stage:nth-child(2) .badge{background:#2A3378;}
+  .stage:nth-child(3) .badge{background:#3A4394;}
+  .stage:nth-child(4) .badge{background:var(--go);}
+
+  /* ===== WARNING STAGE (STAGE 5) ===== */
+  .warn-stage{display:grid; grid-template-columns:96px 1fr; gap:0 20px; margin-bottom:6px;}
+  .warn-rail{display:flex; flex-direction:column; align-items:center;}
+  .warn-rail .badge{
+    width:64px; height:64px; border-radius:50%; background:var(--warn); color:#fff;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-weight:900; box-shadow:0 4px 14px rgba(180,89,14,0.25); flex-shrink:0;
+  }
+  .warn-rail .badge .n{font-size:10px; font-weight:700; opacity:0.85; letter-spacing:0.02em; text-align:center; padding:0 4px;}
+  .warn-card{background:var(--warn-tint); border:1.5px solid #F0C591; border-radius:16px; padding:26px 26px 22px;}
+  .warn-title{font-size:19px; font-weight:900; color:var(--warn); margin-bottom:6px;}
+  .warn-goal{font-size:13.5px; color:#8A5A1E; background:#FFFFFF; border-left:3px solid var(--warn); padding:9px 14px; border-radius:0 8px 8px 0;}
+  .warn-goal b{color:var(--warn);}
+  .warn-card .rule-box.no{background:#FFFFFF;}
+  .warn-card .rule-box.yes{background:#FFFFFF;}
+  .warn-card .script{background:var(--navy-deep);}
+
+  /* ===== SUMMARY CARD (poster) ===== */
+  .poster{
+    background:var(--navy); background-image:linear-gradient(155deg, var(--navy) 0%, var(--navy-deep) 100%);
+    border-radius:20px; padding:26px 26px 24px; color:#fff; margin-top:6px;
+  }
+  .poster-head{text-align:center; margin-bottom:18px;}
+  .poster-head .pt{font-size:12px; font-weight:800; letter-spacing:0.14em; color:var(--gold); margin-bottom:8px; text-transform:uppercase;}
+  .poster-head h2{font-size:26px; font-weight:900;}
+  .poster-head .ps{font-size:13px; color:rgba(255,255,255,0.65); margin-top:6px;}
+
+  .do-list{display:flex; flex-direction:column; gap:12px;}
+  .do-item{
+    display:grid; grid-template-columns:40px 1fr; gap:16px;
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14);
+    border-radius:14px; padding:16px 20px;
+  }
+  .do-num{
+    width:34px; height:34px; border-radius:10px; background:#8CE7BE; color:var(--navy-deep);
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; flex-shrink:0;
+  }
+  .do-title{font-size:16px; font-weight:900; color:#fff; margin-bottom:6px; line-height:1.4;}
+  .do-desc{font-size:13px; color:rgba(255,255,255,0.75); line-height:1.6;}
+
+  .footer-note{text-align:center; margin-top:44px; font-size:12px; color:var(--ink-soft);}
+
+  @media print{
+    body{background:#fff; padding-bottom:0;}
+    .footer-note{margin-top:24px; padding-bottom:24px;}
+    .hero::after, .hero::before{display:none;}
+    .stage{ break-inside:avoid; page-break-inside:avoid; }
+    .stage-card{ break-inside:avoid; page-break-inside:avoid; }
+    .poster{ break-inside:avoid; page-break-inside:avoid; }
+    .rule-grid{ break-inside:avoid; page-break-inside:avoid; }
+    .script{ break-inside:avoid; page-break-inside:avoid; }
+    .do-item{ break-inside:avoid; page-break-inside:avoid; }
+    .data-table{ break-inside:avoid; page-break-inside:avoid; }
+    .section-label{ break-after:avoid; page-break-after:avoid; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow"><span class="dot"></span>CX 현장 매뉴얼 · 관리자 필독</div>
+      <h1>보고를 받은 순간부터, 30분이 브랜드를 지킵니다</h1>
+      <p class="hero-sub">현장에서 당황하거나 어설프게 타협하면 클레임은 언론·SNS 제보나 보복성 리뷰로 확산됩니다. 메이트의 보고를 받은 즉시, 아래 단계대로 결단력 있게 종결하고 정확하게 기록을 남기세요.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="section-label"><span>관리자 전용 행동강령</span><div class="line"></div></div>
+
+    <div class="timeline">
+
+      <!-- STAGE 1 -->
+      <div class="stage">
+        <div class="stage-rail">
+          <div class="badge"><span class="n">STEP 1</span></div>
+          <div class="rail-line"></div>
+        </div>
+        <div class="stage-card">
+          <div class="stage-head">
+            <div class="stage-title">보고 확인 후 즉시 현장 이동</div>
+            <div class="stage-goal"><b>핵심 목표</b> · 보고받은 즉시 현장 이동, 고객에게 책임자임을 밝히고 주도권을 확보한다.</div>
+          </div>
+          <div class="rule-grid">
+            <div class="rule-box no">
+              <div class="rb-head"><span class="rb-icon">✕</span>DON'T</div>
+              <ul>
+                <li>고객에게 "무슨 일 때문에 그러시죠?"라고 다시 묻는다 — 분노를 재유발한다</li>
+              </ul>
+            </div>
+            <div class="rule-box yes">
+              <div class="rb-head"><span class="rb-icon">✓</span>DO</div>
+              <ul>
+                <li>사전 정보 파악 — 메이트에게 수거된 접시·사진을 전달받아 해충 종류/발견 위치/고객 인원/감정 상태 즉시 확인</li>
+                <li>복장·용모 정돈 — 명찰 착용 확인, 무전기 음량을 낮추고 정중한 자세로 접근</li>
+                <li>이미 사정을 다 알고 도착했음을 밝히며 대화를 주도한다</li>
+              </ul>
+            </div>
+          </div>
+          <div class="script">
+            <span class="speaker">관리자 현장 등장 스크립트</span>
+            <p>"고객님, 안녕하십니까. 오늘 매장 책임자를 맡고 있는 지점장 OOO입니다.<br>저희 직원을 통해 식사 중 해충 발견으로 인해 소중한 식사 자리에 큰 불편을 겪으셨다는 이야기를 들었습니다.<br>매장의 위생과 관리 총괄 책임자로서 고개 숙여 진심으로 사과드립니다."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 2 -->
+      <div class="stage">
+        <div class="stage-rail">
+          <div class="badge"><span class="n">STEP 2</span></div>
+          <div class="rail-line"></div>
+        </div>
+        <div class="stage-card">
+          <div class="stage-head">
+            <div class="stage-title">현장 상황 제어 및 장소 이동</div>
+            <div class="stage-goal"><b>핵심 목표</b> · 주변 고객으로의 클레임 전이를 차단하고 고객 감정을 완화한다.</div>
+          </div>
+          <div class="rule-grid" style="grid-template-columns:1fr;">
+            <div class="rule-box yes">
+              <div class="rb-head"><span class="rb-icon">✓</span>DO</div>
+              <ul>
+                <li><b>공간 분리</b> — 단체 고객이거나 목소리가 높아질 경우, 다른 고객 시선이 닿지 않는 독립 룸·전용 좌석·상담 공간으로 이동 유도</li>
+                <li><b>샐러드바 즉시 통제(뷔페 전용)</b> — 발견 즉시 주방 셰프에게 무전하여 해당 코너 음식 전량 수거 및 알코올 소독 지시 (고객 응대와 동시 진행)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="script">
+            <span class="speaker">장소 이동 유도 스크립트</span>
+            <p>"고객님, 식사 중에 많이 놀라셨을 텐데 소란스러운 홀보다는<br>저쪽 안쪽의 편안하고 조용한 전용 룸으로 안내해 드려도 괜찮겠습니까?<br>이곳에서 고객님의 말씀을 경청하고 바로 조치해 드리겠습니다."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 3 -->
+      <div class="stage">
+        <div class="stage-rail">
+          <div class="badge"><span class="n">STEP 3</span></div>
+          <div class="rail-line"></div>
+        </div>
+        <div class="stage-card">
+          <div class="stage-head">
+            <div class="stage-title">보상 안내 및 재발 방지 약속</div>
+            <div class="stage-goal"><b>핵심 목표</b> · 전액 환불 안내 및 재발 방지 안내를 드리며 현장에서 종결할 수 있도록 한다.</div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>보상 및 조치 가이드라인</th>
+                <th>현장 결제 처리 수칙</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>일반 고객<br>(1~4인)</td>
+                <td>해당 테이블 식사 100% 전액 환불/취소 + 사과 쿠폰 전달</td>
+                <td>POS에서 [위생클레임 취소] 사유 선택 후 즉시 결제 취소</td>
+              </tr>
+              <tr>
+                <td>단체<br>(식사 중단/퇴장)</td>
+                <td>100% 전액 환불/취소 + 인체 위해 시 병원비 보장 약속</td>
+                <td>전체 승인 취소 후 지점장 명함 전달 및 연락처 확보</td>
+              </tr>
+              <tr>
+                <td>단체<br>(식사 후반/협의)</td>
+                <td>당사자 테이블 100% 환불 + 전체 금액 50% 할인</td>
+                <td>해당 비율 할인 적용 결제 진행</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="script">
+            <span class="speaker">단체 전액 환불 제시 스크립트</span>
+            <p>"고객님, 오늘 모처럼 여럿이 함께해 주신 소중한 모임인데 저희의 큰 관리 미흡으로<br>식사를 더 이상 진행하지 못하시게 되어 송구스러운 마음을 금할 길이 없습니다.<br><br>오늘 방문해 주신 일행분들 전체 식사 비용은 매장 책임자인 제가 즉시 100% 전액 취소 처리해 드리겠습니다."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 4 -->
+      <div class="stage">
+        <div class="stage-rail">
+          <div class="badge"><span class="n">STEP 4</span></div>
+        </div>
+        <div class="stage-card">
+          <div class="stage-head">
+            <div class="stage-title">CX, 위안준 즉시 보고</div>
+            <div class="stage-goal"><b>핵심 목표</b> · 즉시 위안준과 CX팀 핫라인을 발동시킨다.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-label"><span>휴게실 · 사무실 부착용 요약카드</span><div class="line"></div></div>
+
+    <div class="poster">
+      <div class="poster-head">
+        <div class="pt">관리자 현장 요약</div>
+        <h2>DO 3</h2>
+        <p class="ps">보고를 받은 순간부터 이 3가지만 지키면 종결됩니다</p>
+      </div>
+      <div class="do-list">
+        <div class="do-item">
+          <div class="do-num">1</div>
+          <div class="do-body">
+            <div class="do-title">현장 이동</div>
+            <div class="do-desc">보고받은 즉시 현장 도착, 책임자임을 먼저 밝히고 대화를 주도한다.</div>
+          </div>
+        </div>
+        <div class="do-item">
+          <div class="do-num">2</div>
+          <div class="do-body">
+            <div class="do-title">보상·종결</div>
+            <div class="do-desc">가이드라인에 따라 전액 환불 등 보상을 결단력 있게 제시하고 현장에서 종결한다.</div>
+          </div>
+        </div>
+        <div class="do-item">
+          <div class="do-num">3</div>
+          <div class="do-body">
+            <div class="do-title">즉시 보고</div>
+            <div class="do-desc">위안준과 CX팀 핫라인을 즉시 발동시켜 공유한다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-note">CX팀 · 해충 클레임 관리자 대응 매뉴얼 — 정직원(점장·부점장) 전용</p>
+  </div>
+
+</body>
+</html>
