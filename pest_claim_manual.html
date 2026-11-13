@@ -79,23 +79,13 @@
     max-width:560px;
     margin-bottom:28px;
   }
-  .stopwatch{
-    display:flex; align-items:center; gap:0;
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.14);
-    border-radius:14px;
-    padding:16px 20px;
-    max-width:640px;
-    flex-wrap:wrap;
+  .ver-badge{
+    display:inline-block;
+    font-size:11px; font-weight:800; letter-spacing:0.04em;
+    background:rgba(199,154,63,0.18); color:var(--gold);
+    border:1px solid rgba(199,154,63,0.4);
+    padding:3px 10px; border-radius:20px;
   }
-  .stopwatch .seg{
-    display:flex; flex-direction:column; gap:2px;
-    padding:0 16px;
-    border-right:1px solid rgba(255,255,255,0.14);
-  }
-  .stopwatch .seg:last-child{border-right:none;}
-  .stopwatch .seg .t{font-size:20px; font-weight:900; color:#fff; font-variant-numeric:tabular-nums;}
-  .stopwatch .seg .l{font-size:11.5px; color:rgba(255,255,255,0.6); font-weight:500;}
 
   /* ===== CONTAINER ===== */
   .wrap{max-width:900px; margin:0 auto; padding:0 24px;}
@@ -152,6 +142,19 @@
   }
   .stage-head{margin-bottom:14px;}
   .stage-title{font-size:19px; font-weight:900; color:var(--navy-deep); margin-bottom:6px;}
+  .new-tag{
+    display:inline-block; vertical-align:middle;
+    font-size:10.5px; font-weight:800; letter-spacing:0.04em;
+    background:var(--gold); color:var(--navy-deep);
+    padding:2px 8px; border-radius:20px; margin-left:6px;
+  }
+  .who-tag{
+    display:inline-block; vertical-align:middle;
+    font-size:10.5px; font-weight:800;
+    background:var(--paper-tint); color:var(--navy-soft);
+    border:1px solid var(--line);
+    padding:2px 8px; border-radius:20px; margin-left:4px;
+  }
   .stage-principle{
     font-size:13.5px; color:var(--ink-soft);
     background:var(--paper-tint);
@@ -211,6 +214,8 @@
     padding:2px 10px; border-radius:20px;
     letter-spacing:0.04em;
   }
+  .script.radio::before{content:"무전";}
+  .script.double::before{content:"더블링";}
   .script p{
     color:#fff; font-size:14.5px; font-weight:500;
     line-height:1.75;
@@ -251,41 +256,6 @@
   .poster-head h2{font-size:24px; font-weight:900;}
   .poster-head .ps{font-size:13px; color:rgba(255,255,255,0.65); margin-top:6px;}
 
-  .poster-grid{display:grid; grid-template-columns:1fr; gap:18px;}
-  @media(min-width:620px){ .poster-grid{grid-template-columns:1fr 1fr;} }
-
-  .poster-col{
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.14);
-    border-radius:14px;
-    padding:18px 18px 8px;
-  }
-  .poster-col .pc-title{
-    display:flex; align-items:center; gap:8px;
-    font-size:14px; font-weight:900; margin-bottom:14px;
-  }
-  .poster-col.no .pc-title{color:#FF9B9B;}
-  .poster-col.yes .pc-title{color:#8CE7BE;}
-  .poster-col .pc-badge{
-    width:24px; height:24px; border-radius:7px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:12px; font-weight:900; color:var(--navy-deep);
-  }
-  .poster-col.no .pc-badge{background:#FF9B9B;}
-  .poster-col.yes .pc-badge{background:#8CE7BE;}
-
-  .pc-item{
-    display:flex; gap:10px;
-    padding:10px 0 14px;
-    border-bottom:1px dashed rgba(255,255,255,0.14);
-    margin-bottom:0;
-  }
-  .pc-item:last-child{border-bottom:none;}
-  .pc-item .kw{font-size:14px; font-weight:800; flex-shrink:0; min-width:78px;}
-  .poster-col.no .kw{color:#FF9B9B;}
-  .poster-col.yes .kw{color:#8CE7BE;}
-  .pc-item .desc{font-size:12.5px; color:rgba(255,255,255,0.72); line-height:1.55;}
-
   .do-list{display:flex; flex-direction:column; gap:12px;}
   .do-item{
     display:grid; grid-template-columns:40px 1fr; gap:16px;
@@ -316,6 +286,18 @@
     .script{ break-inside: avoid; page-break-inside: avoid; }
     .section-label{ break-after: avoid; page-break-after: avoid; }
   }
+
+  /* ===== 대외비 워터마크 ===== */
+  body::after{
+    content:"대외비입니다.\A외부 노출 절대 금지";
+    white-space:pre; text-align:center; line-height:1.35;
+    position:fixed; left:50%; top:50%;
+    transform:translate(-50%,-50%) rotate(-35deg);
+    font-family:'Noto Sans KR','맑은 고딕','Malgun Gothic',sans-serif;
+    font-weight:900; font-size:clamp(28px, 6vw, 48px);
+    color:rgba(120,125,145,0.16);
+    pointer-events:none; z-index:9999;
+  }
 </style>
 </head>
 <body>
@@ -323,8 +305,9 @@
   <div class="hero">
     <div class="hero-inner">
       <div class="eyebrow"><span class="dot"></span>CX 현장 매뉴얼 · 메이트 필독</div>
-      <h1>해충 클레임, 30초 안에 승부가 갈립니다</h1>
-      <p class="hero-sub">"말없이 치우지 말고 진심으로 사과하며, 30초 안에 관리자에게 보고해라!"</p>
+      <h1>해충 클레임, 처음 30초가 중요합니다</h1>
+      <p class="hero-sub">"말없이 치우지 말고 진심으로 사과하며, 무전을 누른 채 고객 말씀을 되짚어 전 직원에게 공유해라!"</p>
+      <span class="ver-badge">v2 · 무전 더블링 · 홀 전 직원 주변 확인 추가</span>
     </div>
   </div>
 
@@ -371,10 +354,51 @@
         </div>
       </div>
 
-      <!-- STAGE 2 -->
+      <!-- STAGE 2 (NEW) -->
       <div class="stage">
         <div class="stage-rail">
           <div class="badge"><span class="n">STEP 2</span></div>
+          <div class="rail-line"></div>
+        </div>
+        <div class="stage-card">
+          <div class="stage-head">
+            <div class="stage-title">무전 누른 채 더블링<span class="new-tag">NEW</span></div>
+            <div class="stage-principle"><b>핵심 원칙</b> · 고객이 해충을 봤다고 말하는 즉시 <b>무전 버튼을 누른 채</b> 고객 말씀을 그대로 되짚어 말한다(더블링). 따로 보고하지 않아도 <b>홀 전 직원이 무슨 일이 생겼는지 바로 알게</b> 된다.</div>
+          </div>
+          <div class="rule-grid">
+            <div class="rule-box no">
+              <div class="rb-head"><span class="rb-icon">✕</span>DON'T</div>
+              <ul>
+                <li>관리자를 찾으러 매장을 돌아다니며 시간 지체하기</li>
+                <li>무전 없이 혼자 듣고 혼자 처리하기</li>
+                <li>"벌레요?" 등 큰 소리로 되묻기 — 더블링은 차분하고 낮은 톤으로</li>
+                <li>"음식값 빼드릴게요", "새로 가져다드릴게요" 등 임의 보상 약속</li>
+              </ul>
+            </div>
+            <div class="rule-box yes">
+              <div class="rb-head"><span class="rb-icon">✓</span>DO</div>
+              <ul>
+                <li>고객이 말을 시작하면 바로 무전 버튼을 누르고 끝까지 누른 상태 유지</li>
+                <li>고객 말씀을 그대로 되짚기 — <b>위치(테이블 번호·샐러드바 구역)</b>가 꼭 들어가야 직원들이 그쪽으로 이동할 수 있음</li>
+                <li>더블링 끝에 "바로 매장 책임자에게 전달드려 직접 찾아뵙도록 하겠습니다."로 마무리</li>
+              </ul>
+            </div>
+          </div>
+          <div class="script double">
+            <span class="speaker">메이트 → 고객 (무전 누른 채) · 샐러드바 예시</span>
+            <p>"아, 샐러드바 그릴 쪽에서 해충을 보셨다는 말씀이시죠?<br>정말 죄송합니다. 바로 매장 책임자에게 전달드려 직접 찾아뵙도록 하겠습니다."</p>
+          </div>
+          <div class="script double">
+            <span class="speaker">메이트 → 고객 (무전 누른 채) · 테이블 예시</span>
+            <p>"아, 15번 테이블 드시던 접시에서 해충을 보셨다는 말씀이시죠?<br>많이 놀라셨겠습니다. 바로 매장 책임자에게 전달드려 직접 찾아뵙도록 하겠습니다."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 3 -->
+      <div class="stage">
+        <div class="stage-rail">
+          <div class="badge"><span class="n">STEP 3</span></div>
           <div class="rail-line"></div>
         </div>
         <div class="stage-card">
@@ -397,67 +421,50 @@
           </div>
           <div class="script">
             <span class="speaker">메이트 2차 스크립트</span>
-            <p>"불편을 드려 죄송합니다. 해당 접시는 제가 즉시 정리 도와드리고,<br>책임자에게 바로 보고하여 안내 드리겠습니다."</p>
+            <p>"불편을 드려 죄송합니다. 해당 접시는 제가 즉시 정리 도와드리고,<br>책임자가 바로 와서 안내 드리겠습니다."</p>
           </div>
         </div>
       </div>
 
-      <!-- STAGE 3 -->
+      <!-- STAGE 4 (NEW) -->
       <div class="stage">
         <div class="stage-rail">
-          <div class="badge"><span class="n">STEP 3</span></div>
+          <div class="badge"><span class="n">STEP 4</span></div>
           <div class="rail-line"></div>
         </div>
         <div class="stage-card">
           <div class="stage-head">
-            <div class="stage-title">관리자 이관 과정</div>
-            <div class="stage-principle"><b>핵심 원칙</b> · 고객이 보이지 않는 곳(사이드 등)으로 이동하여 즉시 관리자에게 보고한다.</div>
+            <div class="stage-title">홀 전 직원 주변 확인<span class="new-tag">NEW</span><span class="who-tag">무전 착용 홀 직원 전원</span></div>
+            <div class="stage-principle"><b>핵심 원칙</b> · 더블링을 들은 홀 직원 전원은 해당 위치 주변으로 이동해 <b>놓친 해충이 없도록</b> 함께 확인한다. 단, 다른 고객이 눈치채지 않게 자연스럽게 움직인다.</div>
           </div>
           <div class="rule-grid">
             <div class="rule-box no">
               <div class="rb-head"><span class="rb-icon">✕</span>DON'T</div>
               <ul>
-                <li>"음식값 빼드릴게요", "새로 가져다드릴게요" 등 임의 보상 약속</li>
+                <li>한 테이블 앞에 몰려 서서 둘러싸기 — 각자 다른 구역으로 흩어져 확인</li>
+                <li>주변 고객 앞에서 "벌레 어디 있어?" 등 큰 소리로 묻기</li>
+                <li>허리를 숙여 바닥을 뒤지는 등 눈에 띄게 찾기</li>
+                <li>확인을 끝내지 않고 자리로 돌아가기</li>
               </ul>
             </div>
             <div class="rule-box yes">
               <div class="rb-head"><span class="rb-icon">✓</span>DO</div>
               <ul>
-                <li>수거한 식기를 들고 퇴장하며 홀 매니저/관리자에게 즉시 이동</li>
-                <li>3초 보고 양식 — [테이블 번호] + [해충 발생] + [고객 성향]</li>
+                <li>확인 범위 — 해당 테이블·의자·바닥, 앞뒤·양옆 테이블, 벽면·창틀, 가까운 샐러드바와 이동 동선</li>
+                <li>테이블 정리·리필·기물 교체를 하듯 자연스럽게 확인</li>
+                <li>추가 해충 발견 시 고객 시선 밖에서 즉시 수거 후 무전 보고</li>
+                <li>주변 고객 중 해충을 본 듯하거나 놀란 고객이 있으면 테이블 번호를 무전으로 관리자에게 공유</li>
+                <li>확인이 끝나면 "확인 완료" 무전</li>
               </ul>
             </div>
           </div>
-          <div class="script">
-            <span class="speaker">메이트 → 관리자 보고</span>
-            <p>"관리자님, 15번 테이블 단체 손님 식사 중 해충(날벌레)이 나왔습니다.<br>접시는 제가 수거했고 고객님이 많이 화가 나신 상태입니다. 즉시 응대 부탁드립니다."</p>
+          <div class="handoff-note">
+            <span>📢</span>
+            <span><b>무전은 홀 직원만 착용합니다</b> — 더블링을 들은 홀 직원은 전원 이동해 확인합니다.</span>
           </div>
-        </div>
-      </div>
-
-      <!-- STAGE 4 -->
-      <div class="stage">
-        <div class="stage-rail">
-          <div class="badge"><span class="n">STEP 4</span></div>
-        </div>
-        <div class="stage-card">
-          <div class="stage-head">
-            <div class="stage-title">관리자 응대</div>
-            <div class="stage-principle"><b>핵심 원칙</b> · 관리자는 고객이 "똑같은 말을 또 하게" 만들지 않는다.</div>
-          </div>
-          <div class="rule-grid" style="grid-template-columns:1fr;">
-            <div class="rule-box yes">
-              <div class="rb-head"><span class="rb-icon">✓</span>DO</div>
-              <ul>
-                <li>보고받은 후 30초 이내 해당 테이블로 이동</li>
-                <li>"무슨 일이신가요?"라고 다시 묻지 않는다 — 전달받은 내용으로 바로 사과에 들어간다</li>
-                <li>명함 제시 또는 지점 책임자임을 밝혀 신뢰감 형성</li>
-              </ul>
-            </div>
-          </div>
-          <div class="script">
-            <span class="speaker">관리자 등장 스크립트</span>
-            <p>"고객님, 안녕하십니까. 오늘 매장 책임자를 맡고 있는 지점장 OOO입니다.<br>저희 직원을 통해 식사 중 해충 발생으로 큰 불편을 겪으셨다는 이야기를 전달받았습니다.<br>소중한 식사 시간에 이런 불쾌감을 드려 매장 책임자로서 고개 숙여 사과드립니다."</p>
+          <div class="script radio">
+            <span class="speaker">주변 확인 직원 → 전 직원 (무전)</span>
+            <p>"15번 주변 확인 완료했습니다."<br>"14번 테이블 고객님도 보신 것 같습니다. 관리자님 확인 부탁드립니다."</p>
           </div>
         </div>
       </div>
@@ -469,8 +476,8 @@
     <div class="poster">
       <div class="poster-head">
         <div class="pt">현장 교육용 요약</div>
-        <h2>DO 3</h2>
-        <p class="ps">이 3가지만 지키면 1차 대응은 성공입니다</p>
+        <h2>DO 4</h2>
+        <p class="ps">이 4가지만 지키면 1차 대응은 성공입니다</p>
       </div>
       <div class="do-list">
         <div class="do-item">
@@ -483,21 +490,28 @@
         <div class="do-item">
           <div class="do-num">2</div>
           <div class="do-body">
-            <div class="do-title">[죄송한 표정과 공감] 미안함이 드러나는 표정 및 정중한 은폐 수거</div>
-            <div class="do-desc">고객의 불쾌감에 100% 공감하는 안타깝고 죄송한 표정을 지으며, 덮개/린넨으로 해당 접시를 덮어 주변의 시선을 차단한 후 정중하게 수거합니다.</div>
+            <div class="do-title">[무전 더블링] 무전을 누른 채 고객 말씀 되짚기</div>
+            <div class="do-desc">관리자를 찾아다니지 말고, 무전 버튼을 누른 채 "아, 샐러드바 그릴 쪽에서 해충을 보셨다는 말씀이시죠?"처럼 위치가 들어가게 고객 말씀을 되짚습니다.</div>
           </div>
         </div>
         <div class="do-item">
           <div class="do-num">3</div>
           <div class="do-body">
-            <div class="do-title">[신속한 보고] 30초 이내 관리자에게 바통 터치하기</div>
-            <div class="do-desc">수거 후 즉시 매장 내 책임자에게 [테이블 번호 + 해충 종류 + 고객 감정 상태]를 무전/구두로 신속하게 보고합니다.</div>
+            <div class="do-title">[죄송한 표정과 공감] 미안함이 드러나는 표정 및 정중한 은폐 수거</div>
+            <div class="do-desc">고객의 불쾌감에 100% 공감하는 안타깝고 죄송한 표정을 지으며, 덮개/린넨으로 해당 접시를 덮어 주변의 시선을 차단한 후 정중하게 수거합니다.</div>
+          </div>
+        </div>
+        <div class="do-item">
+          <div class="do-num">4</div>
+          <div class="do-body">
+            <div class="do-title">[함께 확인] 더블링을 들은 홀 직원 전원은 주변을 확인해 놓치지 않기</div>
+            <div class="do-desc">해당 테이블 주변·바닥·샐러드바를 자연스럽게 확인하고, 추가 해충이나 해충을 본 고객이 있으면 즉시 무전으로 공유합니다.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <p class="footer-note">CX팀 · 해충 클레임 초동 대응 매뉴얼 — 메이트 · 매니저 공용</p>
+    <p class="footer-note">CX팀 · 해충 클레임 초동 대응 매뉴얼 v2 — 메이트용</p>
   </div>
 
 </body>
